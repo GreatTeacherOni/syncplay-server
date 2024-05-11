@@ -2,7 +2,9 @@
 
 args=""
 
-if [ -n $SYNCPLAY_SALT ]; then
+if [ -n "$SYNCPLAY_SALT_FILE" ]; then
+  args="$args --salt=$(cat $SYNCPLAY_SALT_FILE)"
+elif [ -n "$SYNCPLAY_SALT" ]; then
   args="$args --salt=$SYNCPLAY_SALT"
 elif [ -n $SALT ]; then
   args="$args --salt=$SALT"
@@ -20,16 +22,22 @@ elif [ -n "$ISOLATE" ]; then
   args="$args --isolate-rooms"
 fi
 
-if [ -n "$SYNCPLAY_MOTD" ]; then
-  echo "$SYNCPLAY_MOTD" >> /app/syncplay/motd
-elif [ -n "$MOTD" ]; then
-  echo "$MOTD" >> /app/syncplay/motd
-fi
-if [ -f /app/syncplay/motd ]; then
-  args="$args --motd-file=/app/syncplay/motd"
+if [ -n "$SYNCPLAY_MOTD_FILE" ]; then
+  args="$args --motd-file=$SYNCPLAY_MOTD_FILE"
+else
+  if [ -n "$SYNCPLAY_MOTD" ]; then
+    echo "$SYNCPLAY_MOTD" >> /app/syncplay/motd
+  elif [ -n "$MOTD" ]; then
+    echo "$MOTD" >> /app/syncplay/motd
+  fi
+  if [ -f /app/syncplay/motd ]; then
+    args="$args --motd-file=/app/syncplay/motd"
+  fi
 fi
 
-if [ -n "$SYNCPLAY_PASSWORD" ]; then
+if [ -n "$SYNCPLAY_PASSWORD_FILE" ]; then
+  args="$args --password=$(cat $SYNCPLAY_PASSWORD_FILE)"
+elif [ -n "$SYNCPLAY_PASSWORD" ]; then
   args="$args --password=$SYNCPLAY_PASSWORD"
 elif [ -n "$PASSWORD" ]; then
   args="$args --password=$PASSWORD"
@@ -57,8 +65,10 @@ if [ -n "$SYNCPLAY_STATSFILE" ]; then
   args="$args --stats-db-file=$SYNCPLAY_STATSFILE"
 fi
 
-if [ -n "$SYNCPLAY_TLS" ]; then
-  args="$args --tls=$SYNCPLAY_TLS"
+if [ -n "$SYNCPLAY_TLS_DIR" ]; then
+  args="$args --tls=$SYNCPLAY_TLS_DIR"
+elif [ -n "$TLS" ]; then
+  args="$args --tls=$TLS"
 fi
 
 echo "Starting syncplay-server with args '$args'"
