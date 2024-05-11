@@ -27,8 +27,8 @@ WORKDIR /wheels
 RUN pip install *.whl
 
 # Run as non-root user
-ARG USER_UID=800
-ARG USER_GID=800
+ARG USER_UID=1000
+ARG USER_GID=1000
 
 WORKDIR /app/syncplay
 RUN addgroup -g "${USER_GID}" -S syncplay && \
