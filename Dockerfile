@@ -8,7 +8,8 @@ RUN apk add --no-cache --progress \
         openssl-dev
 
 WORKDIR /source
-RUN git clone --depth=1 --branch=v1.6.9 https://github.com/syncplay/syncplay.git ./ && \
+ARG SYNCPLAY_VERSION 1.6.9
+RUN git clone --depth=1 --branch="${SYNCPLAY_VERSION}" https://github.com/syncplay/syncplay.git ./ && \
     echo "" > requirements_gui.txt
 
 WORKDIR /wheels
