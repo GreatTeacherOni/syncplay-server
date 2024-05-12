@@ -8,7 +8,7 @@ RUN apk add --no-cache --progress \
         openssl-dev
 
 WORKDIR /source
-ARG SYNCPLAY_VERSION 1.6.9
+ARG SYNCPLAY_VERSION 1.7.3
 RUN git clone --depth=1 --branch="${SYNCPLAY_VERSION}" https://github.com/syncplay/syncplay.git ./ && \
     echo "" > requirements_gui.txt
 
