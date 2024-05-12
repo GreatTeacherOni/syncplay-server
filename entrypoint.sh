@@ -3,6 +3,7 @@
 args=""
 
 if [ -n "$SYNCPLAY_SALT_FILE" ]; then
+  if [ ! -s "$SYNCPLAY_SALT_FILE" ]; then echo "SYNCPLAY_SALT_FILE '$SYNCPLAY_SALT_FILE' specified but missing, abort!"; exit 1; fi
   args="$args --salt=$(cat $SYNCPLAY_SALT_FILE)"
 elif [ -n "$SYNCPLAY_SALT" ]; then
   args="$args --salt=$SYNCPLAY_SALT"
@@ -23,6 +24,7 @@ elif [ -n "$ISOLATE" ]; then
 fi
 
 if [ -n "$SYNCPLAY_MOTD_FILE" ]; then
+  if [ ! -s "$SYNCPLAY_MOTD_FILE" ]; then echo "SYNCPLAY_MOTD_FILE '$SYNCPLAY_MOTD_FILE' specified but missing, abort!"; exit 1; fi
   args="$args --motd-file=$SYNCPLAY_MOTD_FILE"
 else
   if [ -n "$SYNCPLAY_MOTD" ]; then
@@ -36,6 +38,7 @@ else
 fi
 
 if [ -n "$SYNCPLAY_PASSWORD_FILE" ]; then
+  if [ ! -s "$SYNCPLAY_PASSWORD_FILE" ]; then echo "SYNCPLAY_PASSWORD_FILE '$SYNCPLAY_PASSWORD_FILE' specified but missing, abort!"; exit 1; fi
   args="$args --password=$(cat $SYNCPLAY_PASSWORD_FILE)"
 elif [ -n "$SYNCPLAY_PASSWORD" ]; then
   args="$args --password=$SYNCPLAY_PASSWORD"
@@ -66,6 +69,8 @@ if [ -n "$SYNCPLAY_STATSFILE" ]; then
 fi
 
 if [ -n "$SYNCPLAY_TLS_DIR" ]; then
+  if [ ! -d "$SYNCPLAY_TLS_DIR" ]; then echo "SYNCPLAY_TLS_DIR '$SYNCPLAY_TLS_DIR' specified but missing, abort!"; exit 1; fi
+  if [ ! -r "${SYNCPLAY_TLS_DIR}/cert.pem" && ! -r "${SYNCPLAY_TLS_DIR}/cert.pem" && ! -r "${SYNCPLAY_TLS_DIR}/cert.pem" ]; then echo "Can't access TLS files, aborting!"; exit 1; fi
   args="$args --tls=$SYNCPLAY_TLS_DIR"
 elif [ -n "$TLS" ]; then
   args="$args --tls=$TLS"
