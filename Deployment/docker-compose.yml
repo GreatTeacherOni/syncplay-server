@@ -7,9 +7,14 @@ services:
       restart_policy:
         condition: on-failure
     ports:
-      - "8999:8999"
+      - 8999:8999
     environment:
-     - PASSWORD=<You should add your own password here>
-     - TLS=/certs
+      # - SYNCPLAY_PASSWORD:<You should add your own password here, or better use docker secret with line below>
+      # - SYNCPLAY_PASSWORD_FILE: /run/secrets/syncplay_password
+      - TLS_DIR: /certs
     volumes:
      - ./<path to tls certs>:/certs
+
+secrets:
+  SYNCPLAY_PASSWORD_FILE:
+    file: secrets/syncplay_password
