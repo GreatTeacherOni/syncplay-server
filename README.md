@@ -15,7 +15,7 @@ docker create \
 --name=syncplay \
 --net=host \
 --hostname=syncplay.example.com
---user 800:800
+--user 1000:1000
 -e PASSWORD=<PASSWORD> \
 -e PORT=<PORT> \
 -e TLS=/certs \
