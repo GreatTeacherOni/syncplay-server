@@ -20,7 +20,7 @@ docker create \
 -e PORT=<PORT> \
 -e TLS=/certs \
 -v <certs>:/certs \
-ghcr.io/florinke/syncplay-server
+ghcr.io/<TODO>/syncplay-server
 ```
 
 ## Docker Deploy
